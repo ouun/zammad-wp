@@ -1,0 +1,32 @@
+{
+  "name": "ouun/wp-zammad",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "description": "Integrate a Zammad Form as Block",
+  "homepage": "https://ouun.io",
+  "authors": [
+    {
+      "name": "Philipp Wellmer",
+      "email": "philipp@ouun.io"
+    }
+  ],
+  "keywords": ["wordpress", "wordpress-block", "zammad"],
+  "require": {
+    "php": ">=7.0",
+    "zammad/zammad-api-client-php": "^1.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "ZammadWp\\": "includes/classes/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.2",
+    "10up/wp_mock": "dev-master",
+    "10up/phpcs-composer": "dev-master"
+  },
+  "scripts": {
+    "lint": "phpcs .",
+    "lint-fix": "phpcbf ."
+  }
+}
