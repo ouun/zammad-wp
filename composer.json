@@ -1,5 +1,5 @@
 {
-  "name": "ouun/wp-zammad",
+  "name": "ouun/zammad-wp",
   "type": "wordpress-plugin",
   "license": "MIT",
   "description": "Integrate a Zammad Form as Block",
