@@ -4,17 +4,19 @@ This plugin helps you embed Zammad Chats & Forms into your WordPress site and gi
 It is based on WordPress best practise, keeping your workplace clean by using functions, hooks and filters instead of cluttered dashboard pages.
 
 ## Install
-I recommend you install the package as a Composer dependency with
+I recommend you install the package as a Composer dependency:
 
 `composer require ouun/zammad-wp`
 
+But you can also download the package and install it as a regular WordPress Plugin.
+
 ## Prepare
 
-If you only need the Chat and Form functionality, you need at least to define `ZAMMAD_URL` in `wp-config.php
+If you only need the Chat and Form functionality, just `ZAMMAD_URL` needs defined in `wp-config.php`:
 
-`
+```
 define('ZAMMAD_URL', 'https://my-zammad.com')
-`
+```
 
 If you want to interact with the Zammad API via `ZammadWp` Class, you will additionally need:
 
