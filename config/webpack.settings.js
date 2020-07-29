@@ -6,12 +6,14 @@ module.exports = {
 		frontend: './assets/js/frontend/frontend.js',
 		shared: './assets/js/shared/shared.js',
 		chat: './assets/js/shared/chat.js',
+		form: './assets/js/shared/form.js',
 
 		// CSS files.
 		'admin-style': './assets/css/admin/admin-style.css',
 		'editor-style': './assets/css/frontend/editor-style.css',
 		'shared-style': './assets/css/shared/shared-style.css',
 		'chat-style': './assets/css/shared/chat.scss',
+		'form-style': './assets/css/shared/form.scss',
 		style: './assets/css/frontend/style.css',
 	},
 	filename: {

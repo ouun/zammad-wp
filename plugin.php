@@ -20,6 +20,7 @@ define( 'ZAMMAD_WP_INC', ZAMMAD_WP_PATH . 'includes/' );
 // Include files.
 require_once ZAMMAD_WP_INC . 'functions/core.php';
 require_once ZAMMAD_WP_INC . 'functions/chat.php';
+require_once ZAMMAD_WP_INC . 'functions/form.php';
 
 // Activation/Deactivation.
 register_activation_hook( __FILE__, '\ZammadWp\Core\activate' );
