@@ -28,8 +28,6 @@ function setup()
     add_action('admin_enqueue_scripts', $n('admin_scripts'));
     add_action('admin_enqueue_scripts', $n('admin_styles'));
 
-    // Editor styles. add_editor_style() doesn't work outside of a theme.
-    add_filter('mce_css', $n('mce_css'));
     // Hook to allow async or defer on asset loading.
     add_filter('script_loader_tag', $n('script_loader_tag'), 10, 2);
 
@@ -167,6 +165,11 @@ function scripts()
 		true
 	);
 
+	/*
+	 * Required for further development
+	 *
+	 */
+	/*
     wp_enqueue_script(
         'zammad_wp_shared',
         script_url('shared', 'shared'),
@@ -182,6 +185,7 @@ function scripts()
         ZAMMAD_WP_VERSION,
         true
     );
+	*/
 }
 
 /**
@@ -224,6 +228,11 @@ function admin_scripts()
 		true
 	);
 
+	/*
+	 * Required for further development
+	 *
+	 */
+	/*
     wp_enqueue_script(
         'zammad_wp_shared',
         script_url('shared', 'shared'),
@@ -239,6 +248,7 @@ function admin_scripts()
         ZAMMAD_WP_VERSION,
         true
     );
+	*/
 }
 
 /**
@@ -262,6 +272,11 @@ function styles()
 		ZAMMAD_WP_VERSION
 	);
 
+	/*
+	 * Required for further development
+	 *
+	 */
+	/*
 	wp_enqueue_style(
         'zammad_wp_shared',
         style_url('shared-style', 'shared'),
@@ -284,6 +299,7 @@ function styles()
             ZAMMAD_WP_VERSION
         );
     }
+	*/
 }
 
 /**
@@ -307,6 +323,11 @@ function admin_styles()
 		ZAMMAD_WP_VERSION
 	);
 
+	/*
+	 * Required for further development
+	 *
+	 */
+	/*
     wp_enqueue_style(
         'zammad_wp_shared',
         style_url('shared-style', 'shared'),
@@ -320,23 +341,7 @@ function admin_styles()
         [],
         ZAMMAD_WP_VERSION
     );
-}
-
-/**
- * Enqueue editor styles. Filters the comma-delimited list of stylesheets to load in TinyMCE.
- *
- * @param string $stylesheets Comma-delimited list of stylesheets.
- * @return string
- */
-function mce_css($stylesheets)
-{
-    if (! empty($stylesheets)) {
-        $stylesheets .= ',';
-    }
-
-    return $stylesheets . ZAMMAD_WP_URL . ( ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ?
-            'assets/css/frontend/editor-style.css' :
-            'dist/css/editor-style.min.css' );
+	*/
 }
 
 /**
