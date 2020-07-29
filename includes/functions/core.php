@@ -135,6 +135,21 @@ function style_url($stylesheet, $context)
  */
 function scripts()
 {
+	wp_register_script(
+		'zammad_chat',
+		ZAMMAD_URL . '/assets/chat/chat.min.js',
+		['jquery'],
+		ZAMMAD_WP_VERSION,
+		true
+	);
+
+	wp_register_script(
+		'zammad_wp_chat',
+		script_url('chat', 'shared'),
+		[],
+		ZAMMAD_WP_VERSION,
+		true
+	);
 
     wp_enqueue_script(
         'zammad_wp_shared',
@@ -172,7 +187,7 @@ function admin_scripts()
     wp_register_script(
         'zammad_wp_chat',
 	    script_url('chat', 'shared'),
-        [],
+        ['jquery', 'zammad_chat'],
         ZAMMAD_WP_VERSION,
         true
     );
@@ -201,6 +216,13 @@ function admin_scripts()
  */
 function styles()
 {
+
+	wp_register_style(
+		'zammad_wp_chat',
+		style_url('chat-style', 'shared'),
+		[],
+		ZAMMAD_WP_VERSION
+	);
 
     wp_enqueue_style(
         'zammad_wp_shared',
@@ -233,6 +255,12 @@ function styles()
  */
 function admin_styles()
 {
+	wp_register_style(
+		'zammad_wp_chat',
+		style_url('chat-style', 'shared'),
+		[],
+		ZAMMAD_WP_VERSION
+	);
 
     wp_enqueue_style(
         'zammad_wp_shared',

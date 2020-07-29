@@ -77,6 +77,8 @@
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.0.5",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.2",
     "stylelint": "^9.10.1",
     "stylelint-config-wordpress": "^14.0.0",
     "stylelint-declaration-use-variable": "^1.7.2",

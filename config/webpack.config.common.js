@@ -86,7 +86,7 @@ module.exports = {
 
 			// Styles.
 			{
-				test: /\.css$/,
+				test: /\.(s*)css$/,
 				include: path.resolve(process.cwd(), settings.paths.src.css),
 				use: [
 					{
@@ -102,6 +102,12 @@ module.exports = {
 					},
 					{
 						loader: 'postcss-loader',
+						options: {
+							sourceMap: !isProduction,
+						},
+					},
+					{
+						loader: 'sass-loader',
 						options: {
 							sourceMap: !isProduction,
 						},

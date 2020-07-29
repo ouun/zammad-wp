@@ -1,49 +1,80 @@
-# 10up Plugin Scaffold
+# Zammad for WordPress
 
-> At 10up, we strive to provide digital products that yield a top-notch user experience. In order to improve both our efficiency and consistency, we need to standardize what we use and how we use it. This plugin scaffold allows us to share initial set up procedures to make sure all projects can get up and running as quickly as possible while closely adhering to 10up's high quality standards.
+This plugin helps you embed Zammad Chats & Forms into your WordPress site and gives you Access to the Zammad API if required.
+It is based on WordPress best practise.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level)
+## Zammad Chat
 
-## Dependencies
-
-1. [Node >= 8.11 & NPM](https://www.npmjs.com/get-npm) - Build packages and 3rd party dependencies are managed through NPM, so you will need that installed globally.
-2. [Webpack](https://webpack.js.org/) - Webpack is used to process the JavaScript, CSS, and other assets.
-3. [Composer](https://getcomposer.org/) - Composer is used to manage PHP.
-
-## Getting Started
-
-### Quick Start
-Install 10up's command line tool for scaffolding new projects. You can download it from the [Project Scaffold repository](https://github.com/10up/project-scaffold). Setting up a new plugin is as easy as running `create-10up plugin plugin-name-here` in the terminal!
-
-Browsersync requires a local development URL. This is currently set in the `package.json`, as `proxyUrl`.
-
-### Direct Install
-- Clone the repository
-- Rename folder plugin-scaffold -> your project's name
-- If copying files manually to an existing plugin directory instead of cloning directly from the repository, make sure to include the following files which may be hidden:
+### Embed a chat
+Use the `zammad_register_chat` function either within `init`or `admin_init` hook to add a chat.
 
 ```
-.babelrc
-.browserslistrc
-.editorconfig
-.eslintignore
-.eslintrc
-.gitignore
+add_action('init', function () {
+        if (function_exists('zammad_register_chat')) {
+            zammad_register_chat($chatId, $args);
+        }
+    });
 ```
 
-The NPM commands will fail without these files present.
+This is very flexible as you can register different chat topics e.g. based on a users state (logged in/out, member/visitor,...) or any other WordPress conditions.
+Only set the `$chatId` to the topic you have previously set up in Zammad. You can override the chat options individually by using the second `$args` parameter (see next section for available options).
+So a Dashboard integration could look like this:
 
-- Do case-sensitive search/replace for the following:
+```
+add_action('admin_init', function () {
+    if (function_exists('zammad_register_chat')) {
+        // Logged in user at least with editor role, load chat with topic '2'
+        if (is_user_logged_in() && current_user_can('edit_posts')) {
+            zammad_register_chat( 2, [
+                'buttonClass' => 'button action',
+                'target' => '$("#wpbody")'
+            ] );
+        }
+    }
+});
+```
 
-	- ZammadWp
-	- ZAMMAD_WP
-	- zammad-wp
-	- zammad_wp
+### Change option defaults
+You can change the defaults used by the Zammad Chat JS script via `zammad_wp:chat:defaults` filter.
 
-- `cd` into the plugin folder
-- run `npm run start` to build the front-end assets
+```
+add_filter('zammad_wp:chat:defaults', function ($defaults) {
+    return wp_parse_args(
+        [
+            'debug' => true,
+            'title' => __('Talk to us!', 'text-domain')
+        ],
+        $defaults
+    );
+});
+```
 
-## Webpack config
+The available options are:
+
+| Options       | Default                            | Type            | Description                                                                                                                                                                                                              |
+| ------------- | ---------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| chatId        | `1`                                | `Number`        | Default identifier of the chat-topic.                                                                                                                                                                                            |
+| background    | `#0073aa`                          | `HEX`           | Default background color.                                                                                                                                                                                            |
+| show          | `true`                             | `Boolean`       | Show the chat when ready.                                                                                                                                                                                                |
+| target        | `$('body')`                        | `jQuery Object` | Where to append the chat to.                                                                                                                                                                                             |
+| host          | `(Empty)`                          | `String`        | If left empty, the host gets auto-detected. The auto-detection reads out the host from the <script> tag. If you don't include it via a <script> tag you need to specify the host. |
+| debug         | `false`                            | `Boolean`       | Enables console logging.                                                                                                                                                                                                 |
+| title         | `'<strong>Chat</strong> with us!'` | `String`        | Welcome Title shown on the closed chat. Can contain HTML.                                                                                                                                                                |
+| fontSize      | `undefined`                        | `String`        | CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits the font-size of the website.                                                                                                               |
+| flat          | `false`                            | `Boolean`       | Removes the shadows for a flat look.                                                                                                                                                                                     |
+| buttonClass   | `'open-zammad-chat'`               | `String`        | Add this class to a button on your page that should open the chat.                                                                                                                                                       |
+| inactiveClass | `'is-inactive'`                    | `String`        | This class gets added to the button on initialization and gets removed once the chat connection got established.                                                                                                         |
+| cssAutoload   | `true`                             | `Boolean`       | Automatically loads the chat.css file. If you want to use your own css, just set it to false.                                                                                                                            |
+| cssUrl        | `undefined`                        | `String`        | Location of an external chat.css file.                                                                                                                                                                                   |
+
+By default
+
+## Zammad Forms
+
+
+## Build the package
+
+### Webpack config
 
 Webpack config files can be found in `config` folder:
 
@@ -54,7 +85,7 @@ Webpack config files can be found in `config` folder:
 
 In most cases `webpack.settings.js` is the main file which would change from project to project. For example adding or removing entry points for JS and CSS.
 
-## NPM Commands
+### NPM Commands
 
 - `npm run test` (runs phpunit)
 - `npm run start` (install dependencies)
@@ -71,7 +102,7 @@ In most cases `webpack.settings.js` is the main file which would change from pro
 - `npm run format` (alias for `npm run format-js`)
 - `npm run test-a11y` (run accessibility tests)
 
-## Composer Commands
+### Composer Commands
 
 `composer lint` (lint PHP files)
 
@@ -79,57 +110,10 @@ In most cases `webpack.settings.js` is the main file which would change from pro
 
 ## Contributing
 
-We don't know everything! We welcome pull requests and spirited, but respectful, debates. Please contribute via [pull requests on GitHub](https://github.com/10up/plugin-scaffold/compare).
+We welcome pull requests and spirited, but respectful, debates. Please contribute via [pull requests on GitHub](https://github.com/ouun/zammad-wp/compare).
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b feature/my-new-feature`
 3. Commit your changes: `git commit -am 'Added some great feature!'`
 4. Push to the branch: `git push origin feature/my-new-feature`
 5. Submit a pull request
-
-## Learn more about the default packages used with this project
-
-- [10up Eslint config](https://www.npmjs.com/package/@10up/eslint-config)
-- [10up Stylelint config](https://www.npmjs.com/package/@10up/stylelint-config)
-- [Babel core](https://www.npmjs.com/package/@babel/core)
-- [Babel Eslint](https://www.npmjs.com/package/babel-eslint)
-- [Babel loader](https://www.npmjs.com/package/babel-loader)
-- [Babel preset env](https://www.npmjs.com/package/@babel/preset-env)
-- [Babel register](https://www.npmjs.com/package/@babel/register)
-- [Browsersync](https://browsersync.io/)
-- [Browsersync Webpack plugin](https://www.npmjs.com/package/browser-sync-webpack-plugin)
-- [Browserslist](https://www.npmjs.com/package/browserslist)
-- [Can I Use DB](https://www.npmjs.com/package/caniuse-db)
-- [Clean Webpack plugin](https://www.npmjs.com/package/clean-webpack-plugin)
-- [Copy Webpack plugin](https://www.npmjs.com/package/copy-webpack-plugin)
-- [CSS loader](https://www.npmjs.com/package/css-loader)
-- [CSS nano](https://www.npmjs.com/package/cssnano)
-- [Eslint](https://www.npmjs.com/package/eslint)
-- [Eslint loader](https://www.npmjs.com/package/eslint-loader)
-- [Husky@next](https://www.npmjs.com/package/husky)
-- [Imagemin plugin for Webpack](https://github.com/Klathmon/imagemin-webpack-plugin)
-- [Lint Staged](https://www.npmjs.com/package/lint-staged)
-- [Mini CSS extract plugin](https://www.npmjs.com/package/mini-css-extract-plugin)
-- [PostCSS Import](https://www.npmjs.com/package/postcss-import)
-- [PostCSS loader](https://www.npmjs.com/package/postcss-loader)
-- [PostCSS preset-env](https://www.npmjs.com/package/postcss-preset-env)
-- [Stylelint](https://www.npmjs.com/package/stylelint)
-- [Stylelint config WordPress](https://www.npmjs.com/package/stylelint-config-wordpress)
-- [Stylelint declaration use variable](https://www.npmjs.com/package/stylelint-declaration-use-variable)
-- [Stylelint order](https://www.npmjs.com/package/stylelint-order)
-- [Stylelint Webpack plugin](https://www.npmjs.com/package/stylelint-webpack-plugin)
-- [Terser](https://www.npmjs.com/package/terser)
-- [Webpack](https://www.npmjs.com/package/webpack)
-- [Webpack CLI](https://www.npmjs.com/package/webpack-cli)
-- [Webpack fix style only entries](https://www.npmjs.com/package/webpack-fix-style-only-entries)
-- [Webpack merge](https://www.npmjs.com/package/webpack-merge)
-- [Webpackbar](https://www.npmjs.com/package/webpackbar)
-- [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer)
-
-## Support Level
-
-**Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
-
-## Like what you see?
-
-<a href="http://10up.com/contact/"><img src="https://10updotcom-uploads.s3.amazonaws.com/uploads/2016/08/10up_github_banner-2.png" alt="Work with 10up, we create amazing websites and tools that make content management simple and fun using open source tools and platforms"></a>

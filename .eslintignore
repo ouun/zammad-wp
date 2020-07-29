@@ -2,7 +2,6 @@ assets/js/vendor
 assets/js/admin/vendor
 assets/js/frontend/vendor
 assets/js/shared/vendor
-assets/js/shared/chat.js
 gulp-tasks/
 webpack.config.babel.js
 gulpfile.babel.js

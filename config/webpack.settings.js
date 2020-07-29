@@ -11,6 +11,7 @@ module.exports = {
 		'admin-style': './assets/css/admin/admin-style.css',
 		'editor-style': './assets/css/frontend/editor-style.css',
 		'shared-style': './assets/css/shared/shared-style.css',
+		'chat-style': './assets/css/shared/chat.scss',
 		style: './assets/css/frontend/style.css',
 	},
 	filename: {
@@ -51,8 +52,8 @@ module.exports = {
 	},
 	BrowserSyncConfig: {
 		host: 'localhost',
-		port: 3000,
-		proxy: 'http://zammad-wp.test',
+		port: 1983,
+		proxy: 'http://on.test',
 		open: false,
 		files: [
 			'**/*.php',

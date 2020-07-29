@@ -4,5 +4,9 @@
   "globals": {
 	  "module": true,
 	  "process": true
+  },
+  "env": {
+    "browser": true,
+    "jquery": true
   }
 }
