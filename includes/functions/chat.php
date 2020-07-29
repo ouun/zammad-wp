@@ -17,6 +17,19 @@ function zammad_register_chat($chat_id = 1, $args = [])
 			zammad_init_chat($chat_id, $args);
 		}, 100);
 	}
+
+	// A chat with form fallback requires additional form init, too.
+	if(isset($args['formFallback']) && $args['formFallback']) {
+		if(function_exists('zammad_register_form')) {
+			add_action('wp_footer', function () {
+				echo '<div id="fallback-form" style="display: none;"></div>';
+			}, 999);
+
+			zammad_register_form('#fallback-form', apply_filters('zammad_wp:form:fallback', [
+				'modal' => false
+			]));
+		}
+	}
 }
 
 /**
@@ -29,7 +42,7 @@ function zammad_register_chat($chat_id = 1, $args = [])
 function zammad_init_chat($chat_id = 1, $args = [])
 {
 	// Zammad defaults, overwrite with filter 'zammad_wp:chat:defaults'
-	$defaults = apply_filters('zammad_wp:chat:defaults', [
+	$settings = wp_parse_args($args, apply_filters('zammad_wp:chat:defaults', [
 		'debug' => false,
 		'show' => true,
 		'flat' => false,
@@ -41,10 +54,11 @@ function zammad_init_chat($chat_id = 1, $args = [])
 		'inactiveClass' => 'is-inactive',
 		'cssAutoload' => false,
 		'cssUrl ' => null,
-	]);
+		'formFallback' => false,
+	]));
 
 	// Localize Script
-	wp_localize_script('zammad_wp_chat', 'chatOptions', wp_parse_args($args, $defaults));
+	wp_localize_script('zammad_wp_chat', 'chatOptions',  $settings);
 
 	//  Enqueue styles
 	wp_enqueue_style('zammad_wp_chat');

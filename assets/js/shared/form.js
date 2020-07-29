@@ -1,5 +1,5 @@
 /* global formOptions:true */
-jQuery(function initChat($) {
+jQuery(function initForm($) {
 	$(formOptions.formElement).ZammadForm({
 		messageTitle: formOptions.messageTitle,
 		messageSubmit: formOptions.messageSubmit,
