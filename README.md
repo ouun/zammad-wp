@@ -103,6 +103,22 @@ The available options are:
 | inactiveClass | `'is-inactive'`                    | `String`        | This class gets added to the button on initialization and gets removed once the chat connection got established.                                                                                                         |
 | cssAutoload   | `true`                             | `Boolean`       | Automatically loads the chat.css file. If you want to use your own css, just set it to false.                                                                                                                            |
 | cssUrl        | `undefined`                        | `String`        | Location of an external chat.css file.                                                                                                                                                                                   |
+| formFallback  | `false`                            | `Boolean`       | Fallback to form, see next section for description                                                                                                                                                                       |
+
+
+### Embed a chat with form fallback
+The Zammad team states a bad user experience if "a chat window will appear on the website, but no one is online. Just a “Leave a message” form shows up."
+This is why such a functionality is not embedded in Zammad. if no agent is available to talk to, the chat is hidden.
+However, as a client stated: "We need to give the impression that we are there, ready to support. You know what I mean."
+So against the recommendation of Zammad we introduced a workaround to load the Zammad form within the chat modal, if no agent is available.
+
+```
+add_action('init', function () {
+    zammad_register_chat( 1, [
+        'formFallback' => true
+    ] );
+});
+```
 
 ## Zammad Forms
 Embedding forms is quite similar to embedding a chat. However there are some differences you need to take care of:
