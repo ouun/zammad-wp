@@ -49,7 +49,7 @@ module.exports = {
 	BrowserSyncConfig: {
 		host: 'localhost',
 		port: 1983,
-		proxy: 'http://on.test',
+		proxy: 'https://maticacorp.test',
 		open: false,
 		files: [
 			'**/*.php',

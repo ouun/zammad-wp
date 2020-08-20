@@ -12,7 +12,7 @@ But you can also download the package and install it as a regular WordPress Plug
 
 ## Prepare
 
-If you only need the Chat and Form functionality, just `ZAMMAD_URL` needs defined in `wp-config.php`:
+If you only need the Chat and Form functionality, only `ZAMMAD_URL` is required in `wp-config.php`:
 
 ```
 define('ZAMMAD_URL', 'https://my-zammad.com')
@@ -37,7 +37,7 @@ Further options are:
 ```
 define('ZAMMAD_DEBUG', false) # Debug mode
 define('ZAMMAD_ON_BEHALF_USER') # User ID used to interact with the API
-defined('ZAMMAD_TIMEOUT', 10) # Seconds until connection timeout
+define('ZAMMAD_TIMEOUT', 10) # Seconds until connection timeout
 ```
 
 ## Zammad Chat

@@ -11,11 +11,11 @@ function zammad_register_form($form_element = '#feedback-form', $args = [])
 	if (is_admin()) {
 		add_action('admin_enqueue_scripts', function () use ($form_element, $args) {
 			zammad_init_form($form_element, $args);
-		}, 100);
+		}, 90);
 	} else {
 		add_action('wp_enqueue_scripts', function () use ($form_element, $args) {
 			zammad_init_form($form_element, $args);
-		}, 100);
+		}, 90);
 	}
 }
 
@@ -42,7 +42,7 @@ function zammad_init_form($form_element = '#feedback-form', $args = [])
 	]);
 
 	// Localize Script
-	wp_localize_script('zammad_wp_form', 'formOptions', wp_parse_args($args, $defaults));
+	wp_add_inline_script('zammad_wp_chat', 'const formOptions ='.json_encode(wp_parse_args($args, $defaults)));
 
 	//  Enqueue styles
 	wp_enqueue_style('zammad_wp_form');

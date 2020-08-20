@@ -24,9 +24,7 @@
     "format": "npm run format-js"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "hooks": {}
   },
   "lint-staged": {
     "*.css": [
