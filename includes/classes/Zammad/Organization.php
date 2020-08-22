@@ -7,6 +7,7 @@ use ZammadWp\Zammad;
 
 class Organization extends Zammad
 {
+
     /**
      * @param $string
      * @param null $page
@@ -16,7 +17,7 @@ class Organization extends Zammad
      */
     public function searchOrganizations($string, $page = null, $objects_per_page = null)
     {
-        $search =
+        $search       =
         $this->search =
             $this->client()->resource(ResourceType::ORGANIZATION)->search($string, $page, $objects_per_page);
 
@@ -24,7 +25,7 @@ class Organization extends Zammad
             return $this->search;
         }
 
-        if (!is_array($search)) {
+        if (! is_array($search)) {
             return $search->getError();
         }
 
@@ -39,7 +40,7 @@ class Organization extends Zammad
      */
     public function allOrganizations($page = null, $objects_per_page = null)
     {
-        $organizations =
+        $organizations       =
         $this->organizations =
             $this->client()->resource(ResourceType::ORGANIZATION)->all($page, $objects_per_page);
 
@@ -82,7 +83,7 @@ class Organization extends Zammad
      */
     public function findOrganization($id)
     {
-        $organization = $this->organization =  $this->client()->resource(ResourceType::ORGANIZATION)->get($id);
+        $organization = $this->organization = $this->client()->resource(ResourceType::ORGANIZATION)->get($id);
 
         if ($this->organization) {
             return $this->organization;

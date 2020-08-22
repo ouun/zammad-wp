@@ -11,6 +11,7 @@ use ZammadWp\Zammad;
 class Ticket extends Zammad
 {
 
+
     // Ticket functions
 
     /**
@@ -22,7 +23,7 @@ class Ticket extends Zammad
      */
     public function searchTickets($string, $page = null, $objects_per_page = null)
     {
-        $search =
+        $search       =
         $this->search =
             $this->client()->resource(ResourceType::TICKET)->search($string, $page, $objects_per_page);
 
@@ -30,7 +31,7 @@ class Ticket extends Zammad
             return $this->search;
         }
 
-        if (!is_array($search)) {
+        if (! is_array($search)) {
             return $search->getError();
         }
 
@@ -86,7 +87,7 @@ class Ticket extends Zammad
      */
     public function findTicket($id)
     {
-        $ticket = $this->ticket =  $this->client()->resource(ResourceType::TICKET)->get($id);
+        $ticket = $this->ticket = $this->client()->resource(ResourceType::TICKET)->get($id);
 
         if ($this->ticket) {
             return $this->ticket;
@@ -304,7 +305,7 @@ class Ticket extends Zammad
      */
     public function allTicketPriorities($page = null, $objects_per_page = null)
     {
-        $priorities =
+        $priorities       =
         $this->priorities =
             $this->client()->resource(ResourceType::TICKET_PRIORITY)->all($page, $objects_per_page);
 

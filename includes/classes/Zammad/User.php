@@ -7,6 +7,7 @@ use ZammadWp\Zammad;
 
 class User extends Zammad
 {
+
     /**
      * @param $string
      * @param null $page
@@ -16,7 +17,7 @@ class User extends Zammad
      */
     public function searchUsers($string, $page = null, $objects_per_page = null)
     {
-        $search =
+        $search       =
         $this->search =
             $this->client()->resource(ResourceType::USER)->search($string, $page, $objects_per_page);
 
@@ -24,7 +25,7 @@ class User extends Zammad
             return $this->search;
         }
 
-        if (!is_array($search)) {
+        if (! is_array($search)) {
             return $search->getError();
         }
 
@@ -80,7 +81,7 @@ class User extends Zammad
      */
     public function findUser($id)
     {
-        $user = $this->user =  $this->client()->resource(ResourceType::USER)->get($id);
+        $user = $this->user = $this->client()->resource(ResourceType::USER)->get($id);
 
         if ($this->user) {
             return $this->user;

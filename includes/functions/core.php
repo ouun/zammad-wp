@@ -87,7 +87,7 @@ function deactivate()
  */
 function get_enqueue_contexts()
 {
-    return [ 'admin', 'frontend', 'shared' ];
+    return array( 'admin', 'frontend', 'shared' );
 }
 
 /**
@@ -133,43 +133,43 @@ function style_url($stylesheet, $context)
  */
 function scripts()
 {
-	wp_register_script(
-		'zammad_chat',
-		ZAMMAD_URL . '/assets/chat/chat.min.js',
-		['jquery'],
-		ZAMMAD_WP_VERSION,
-		true
-	);
+    wp_register_script(
+        'zammad_chat',
+        ZAMMAD_URL . '/assets/chat/chat.min.js',
+        array( 'jquery' ),
+        ZAMMAD_WP_VERSION,
+        true
+    );
 
-	wp_register_script(
-		'zammad_wp_chat',
-		script_url('chat', 'shared'),
-		[],
-		ZAMMAD_WP_VERSION,
-		true
-	);
+    wp_register_script(
+        'zammad_wp_chat',
+        script_url('chat', 'shared'),
+        array(),
+        ZAMMAD_WP_VERSION,
+        true
+    );
 
-	wp_register_script(
-		'zammad_form',
-		ZAMMAD_URL . '/assets/form/form.js',
-		['jquery'],
-		ZAMMAD_WP_VERSION,
-		true
-	);
+    wp_register_script(
+        'zammad_form',
+        ZAMMAD_URL . '/assets/form/form.js',
+        array( 'jquery' ),
+        ZAMMAD_WP_VERSION,
+        true
+    );
 
-	wp_register_script(
-		'zammad_wp_form',
-		script_url('form', 'shared'),
-		['jquery', 'zammad_form'],
-		ZAMMAD_WP_VERSION,
-		true
-	);
+    wp_register_script(
+        'zammad_wp_form',
+        script_url('form', 'shared'),
+        array( 'jquery', 'zammad_form' ),
+        ZAMMAD_WP_VERSION,
+        true
+    );
 
-	/*
-	 * Required for further development
-	 *
-	 */
-	/*
+    /*
+     * Required for further development
+     *
+     */
+    /*
     wp_enqueue_script(
         'zammad_wp_shared',
         script_url('shared', 'shared'),
@@ -185,7 +185,7 @@ function scripts()
         ZAMMAD_WP_VERSION,
         true
     );
-	*/
+    */
 }
 
 /**
@@ -195,44 +195,43 @@ function scripts()
  */
 function admin_scripts()
 {
-
     wp_register_script(
         'zammad_chat',
         ZAMMAD_URL . '/assets/chat/chat.min.js',
-        ['jquery'],
+        array( 'jquery' ),
         ZAMMAD_WP_VERSION,
         true
     );
 
     wp_register_script(
         'zammad_wp_chat',
-	    script_url('chat', 'shared'),
-        ['jquery', 'zammad_chat'],
+        script_url('chat', 'shared'),
+        array( 'jquery', 'zammad_chat' ),
         ZAMMAD_WP_VERSION,
         true
     );
 
-	wp_register_script(
-		'zammad_form',
-		ZAMMAD_URL . '/assets/form/form.js',
-		['jquery'],
-		ZAMMAD_WP_VERSION,
-		true
-	);
+    wp_register_script(
+        'zammad_form',
+        ZAMMAD_URL . '/assets/form/form.js',
+        array( 'jquery' ),
+        ZAMMAD_WP_VERSION,
+        true
+    );
 
-	wp_register_script(
-		'zammad_wp_form',
-		script_url('form', 'shared'),
-		['jquery', 'zammad_form'],
-		ZAMMAD_WP_VERSION,
-		true
-	);
+    wp_register_script(
+        'zammad_wp_form',
+        script_url('form', 'shared'),
+        array( 'jquery', 'zammad_form' ),
+        ZAMMAD_WP_VERSION,
+        true
+    );
 
-	/*
-	 * Required for further development
-	 *
-	 */
-	/*
+    /*
+     * Required for further development
+     *
+     */
+    /*
     wp_enqueue_script(
         'zammad_wp_shared',
         script_url('shared', 'shared'),
@@ -248,7 +247,7 @@ function admin_scripts()
         ZAMMAD_WP_VERSION,
         true
     );
-	*/
+    */
 }
 
 /**
@@ -258,26 +257,26 @@ function admin_scripts()
  */
 function styles()
 {
-	wp_register_style(
-		'zammad_wp_chat',
-		style_url('chat-style', 'shared'),
-		[],
-		ZAMMAD_WP_VERSION
-	);
+    wp_register_style(
+        'zammad_wp_chat',
+        style_url('chat-style', 'shared'),
+        array(),
+        ZAMMAD_WP_VERSION
+    );
 
-	wp_register_style(
-		'zammad_wp_form',
-		style_url('form-style', 'shared'),
-		[],
-		ZAMMAD_WP_VERSION
-	);
+    wp_register_style(
+        'zammad_wp_form',
+        style_url('form-style', 'shared'),
+        array(),
+        ZAMMAD_WP_VERSION
+    );
 
-	/*
-	 * Required for further development
-	 *
-	 */
-	/*
-	wp_enqueue_style(
+    /*
+     * Required for further development
+     *
+     */
+    /*
+    wp_enqueue_style(
         'zammad_wp_shared',
         style_url('shared-style', 'shared'),
         [],
@@ -299,7 +298,7 @@ function styles()
             ZAMMAD_WP_VERSION
         );
     }
-	*/
+    */
 }
 
 /**
@@ -309,25 +308,25 @@ function styles()
  */
 function admin_styles()
 {
-	wp_register_style(
-		'zammad_wp_chat',
-		style_url('chat-style', 'shared'),
-		[],
-		ZAMMAD_WP_VERSION
-	);
+    wp_register_style(
+        'zammad_wp_chat',
+        style_url('chat-style', 'shared'),
+        array(),
+        ZAMMAD_WP_VERSION
+    );
 
-	wp_register_style(
-		'zammad_wp_form',
-		style_url('form-style', 'shared'),
-		[],
-		ZAMMAD_WP_VERSION
-	);
+    wp_register_style(
+        'zammad_wp_form',
+        style_url('form-style', 'shared'),
+        array(),
+        ZAMMAD_WP_VERSION
+    );
 
-	/*
-	 * Required for further development
-	 *
-	 */
-	/*
+    /*
+     * Required for further development
+     *
+     */
+    /*
     wp_enqueue_style(
         'zammad_wp_shared',
         style_url('shared-style', 'shared'),
@@ -341,7 +340,7 @@ function admin_styles()
         [],
         ZAMMAD_WP_VERSION
     );
-	*/
+    */
 }
 
 /**

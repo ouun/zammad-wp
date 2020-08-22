@@ -6,29 +6,43 @@
  * @param int $chat_id Zammad Chat-Topic ID
  * @param array $args Chat options
  */
-function zammad_register_chat($chat_id = 1, $args = [])
+function zammad_register_chat($chat_id = 1, $args = array())
 {
-	if (is_admin()) {
-		add_action('admin_enqueue_scripts', function () use ($chat_id, $args) {
-			zammad_init_chat($chat_id, $args);
-		}, 100);
-	} else {
-		add_action('wp_enqueue_scripts', function () use ($chat_id, $args) {
-			zammad_init_chat($chat_id, $args);
-		}, 100);
-	}
+    if (is_admin()) {
+        add_action(
+            'admin_enqueue_scripts',
+            function () use ($chat_id, $args) {
+                zammad_init_chat($chat_id, $args);
+            },
+            100
+        );
+    } else {
+        add_action(
+            'wp_enqueue_scripts',
+            function () use ($chat_id, $args) {
+                zammad_init_chat($chat_id, $args);
+            },
+            100
+        );
+    }
 
-	// A chat with form fallback requires additional form init, too.
-	if(isset($args['formFallback']) && $args['formFallback']) {
-		if(function_exists('zammad_register_form')) {
-			add_action('wp_footer', 'zammad_fallback_form_markup', 999);
-			add_action('admin_footer', 'zammad_fallback_form_markup', 999);
+    // A chat with form fallback requires additional form init, too.
+    if (isset($args['formFallback']) && $args['formFallback']) {
+        if (function_exists('zammad_register_form')) {
+            add_action('wp_footer', 'zammad_fallback_form_markup', 999);
+            add_action('admin_footer', 'zammad_fallback_form_markup', 999);
 
-			zammad_register_form('#fallback-form', apply_filters('zammad_wp:form:fallback', [
-				'modal' => false
-			]));
-		}
-	}
+            zammad_register_form(
+                '#fallback-form',
+                apply_filters(
+                    'zammad_wp:form:fallback',
+                    array(
+                        'modal' => false,
+                    )
+                )
+            );
+        }
+    }
 }
 
 /**
@@ -38,33 +52,49 @@ function zammad_register_chat($chat_id = 1, $args = [])
  * @param int $chat_id Chat ID
  * @param array $args Chat options
  */
-function zammad_init_chat($chat_id = 1, $args = [])
+function zammad_init_chat($chat_id = 1, $args = array())
 {
-	// Zammad defaults, overwrite with filter 'zammad_wp:chat:defaults'
-	$settings = wp_parse_args($args, apply_filters('zammad_wp:chat:defaults', [
-		'debug' => (bool) false,
-		'show' => (bool) true,
-		'flat' => (bool) false,
-		'chatID' => $chat_id,
-		'chatTitle' => "<strong>Chat</strong> with us!",
-		'fontSize' => null,
-		'background' => '#0073aa',
-		'buttonClass' => 'open-zammad-chat',
-		'inactiveClass' => 'is-inactive',
-		'cssAutoload' => (bool) false,
-		'cssUrl ' => null,
-		'formFallback' => (bool) false,
-	]));
+    // Zammad defaults, overwrite with filter 'zammad_wp:chat:defaults'
+    $settings = wp_parse_args(
+        $args,
+        apply_filters(
+            'zammad_wp:chat:defaults',
+            array(
+                'debug'                     => (bool) false,
+                'show'                      => (bool) true,
+                'flat'                      => (bool) false,
+                'chatID'                    => $chat_id,
+                'chatTitle'                 => '<strong>Chat</strong> with us!',
+                'fontSize'                  => null,
+                'background'                => '#0073aa',
+                'buttonClass'               => 'open-zammad-chat',
+                'inactiveClass'             => 'is-inactive',
+                'cssAutoload'               => (bool) false,
+                'cssUrl '                   => null,
+                'formFallback'              => (bool) false,
+                'formFallbackMessage'       => __('Please send us your request and we will answer as soon as possible', 'zammad-wp'),
+                'waitingListWaitingMessage' => __('Sorry for the delay, still connecting.', 'zammad-wp'),
+                'waitingListTimeoutMessage' => sprintf(
+                	// translators: Placeholder is "click here" link text
+                    __(
+                        'We do not want to let you wait anytime longer. Please feel free to use the form instead or <a class="js-restart" href="#restart">%s</a> to try again.',
+                        'zammad-wp'
+                    ),
+                    __('click here', 'zammad-wp')
+                ),
+            )
+        )
+    );
 
-	// Localize Script
-	wp_add_inline_script('zammad_wp_chat', 'const chatOptions ='.json_encode($settings));
+    // Localize Script
+    wp_add_inline_script('zammad_wp_chat', 'const chatOptions =' . json_encode($settings));
 
-	//  Enqueue styles
-	wp_enqueue_style('zammad_wp_chat');
+    //  Enqueue styles
+    wp_enqueue_style('zammad_wp_chat');
 
-	// Enqueue scripts
-	wp_enqueue_script('zammad_chat');
-	wp_enqueue_script('zammad_wp_chat');
+    // Enqueue scripts
+    wp_enqueue_script('zammad_chat');
+    wp_enqueue_script('zammad_wp_chat');
 }
 
 /**
@@ -73,5 +103,5 @@ function zammad_init_chat($chat_id = 1, $args = [])
  */
 function zammad_fallback_form_markup()
 {
-	echo '<div id="fallback-form" style="display: none;"></div>';
+    echo '<div id="fallback-form" style="display: none;"></div>';
 }

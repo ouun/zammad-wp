@@ -16,7 +16,7 @@ module.exports = ( { file, options, env } ) => ( { /* eslint-disable-line */
 		cssnano:
 			env === 'production'
 				? {
-						preset: [
+					preset: [
 							'default',
 							{
 								autoprefixer: false,
@@ -29,9 +29,9 @@ module.exports = ( { file, options, env } ) => ( { /* eslint-disable-line */
 								},
 								mergeLonghand: false,
 								zindex: false,
-							},
+					},
 						],
-				  }
+		}
 				: false,
 	},
 });

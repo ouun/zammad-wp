@@ -7,6 +7,7 @@ use ZammadWp\Zammad;
 
 class Group extends Zammad
 {
+
     /**
      * @param null $page
      * @param null $objects_per_page
@@ -56,7 +57,7 @@ class Group extends Zammad
      */
     public function findGroup($id)
     {
-        $group = $this->group =  $this->client()->resource(ResourceType::GROUP)->get($id);
+        $group = $this->group = $this->client()->resource(ResourceType::GROUP)->get($id);
 
         if ($this->group) {
             return $this->group;

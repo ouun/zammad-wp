@@ -10,6 +10,7 @@ use ZammadWp\Zammad\User;
 
 class Zammad
 {
+
     private $username;
     private $password;
     private $url;
@@ -28,15 +29,17 @@ class Zammad
 
     protected function client()
     {
-        $client = new Client([
-            'url'           => $this->url,
-            'username'      => $this->username,
-            'password'      => $this->password,
-            'http_token'    => $this->http_token,
-            'oauth2_token'  => $this->auth_token
-        ]) ? : null;
+        $client = new Client(
+            array(
+                'url'          => $this->url,
+                'username'     => $this->username,
+                'password'     => $this->password,
+                'http_token'   => $this->http_token,
+                'oauth2_token' => $this->auth_token,
+            )
+        ) ? : null;
 
-        if (!empty($this->onBehalf)) {
+        if (! empty($this->onBehalf)) {
             $client->setOnBehalfOfUser($this->onBehalf) ? : null;
         }
 
@@ -44,7 +47,7 @@ class Zammad
             $client->debug = true;
         }
 
-        if (!empty($this->timeout)) {
+        if (! empty($this->timeout)) {
             $client->timeout = (int) $this->timeout;
         }
         return $client;

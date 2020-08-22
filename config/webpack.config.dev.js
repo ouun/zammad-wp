@@ -1,14 +1,16 @@
-const merge = require('webpack-merge'); // eslint-disable-line import/no-extraneous-dependencies
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin'); // eslint-disable-line import/no-extraneous-dependencies
-const common = require('./webpack.config.common.js');
+const merge             = require( 'webpack-merge' ); // eslint-disable-line import/no-extraneous-dependencies
+const BrowserSyncPlugin = require( 'browser-sync-webpack-plugin' ); // eslint-disable-line import/no-extraneous-dependencies
+const common            = require( './webpack.config.common.js' );
 
 // Config files.
-const settings = require('./webpack.settings.js');
+const settings = require( './webpack.settings.js' );
 
-module.exports = merge(common, {
-	mode: 'development',
-	devtool: 'inline-cheap-module-source-map',
-	plugins: [
+module.exports = merge(
+	common,
+	{
+		mode: 'development',
+		devtool: 'inline-cheap-module-source-map',
+		plugins: [
 		// Run BrowserSync.
 		new BrowserSyncPlugin(
 			{
@@ -24,4 +26,5 @@ module.exports = merge(common, {
 			},
 		),
 	],
-});
+	}
+);

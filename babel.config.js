@@ -8,7 +8,7 @@ module.exports = (api) => {
 	/**
 	 * @see https://babeljs.io/docs/en/config-files#apicache
 	 */
-	api.cache.using(() => process.env.NODE_ENV === 'development');
+	api.cache.using( () => process.env.NODE_ENV === 'development' );
 
 	/**
 	 * Presets
@@ -21,7 +21,7 @@ module.exports = (api) => {
 			'@10up/babel-preset-default',
 			{
 				wordpress: true,
-			},
+	},
 		],
 	];
 
