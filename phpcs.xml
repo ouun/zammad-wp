@@ -6,6 +6,9 @@
 	<!-- Exclude dist-files from being checked. -->
 	<exclude-pattern>/dist/*</exclude-pattern>
 
+	<!-- Exclude tests-files from being checked. -->
+	<exclude-pattern>/tests/*</exclude-pattern>
+
 	<!-- Exclude the Composer Vendor directory. -->
 	<exclude-pattern>/vendor/*</exclude-pattern>
 
