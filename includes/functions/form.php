@@ -45,7 +45,6 @@ function zammad_init_form($form_element = '#feedback-form', $args = array())
             'showTitle'         => true,
             'messageTitle'      => 'Contact us',
             'messageSubmit'     => 'Submit',
-            'messageThankYou'   => 'Thank you for your inquiry (#%s)! We\'ll contact you as soon as possible.',
             'modal'             => true,
             'attachmentSupport' => true,
             'noCSS'             => true, # Loading the CSS from the plugin
@@ -53,7 +52,7 @@ function zammad_init_form($form_element = '#feedback-form', $args = array())
     );
 
     // Localize Script
-    wp_add_inline_script('zammad_wp_chat', 'const formOptions =' . json_encode(wp_parse_args($args, $defaults)));
+    wp_add_inline_script('zammad_wp_form', 'const formOptions =' . json_encode( wp_parse_args($args, $defaults), JSON_UNESCAPED_UNICODE ), 'before');
 
     //  Enqueue styles
     wp_enqueue_style('zammad_wp_form');

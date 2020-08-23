@@ -150,6 +150,8 @@ jQuery(function initForm($) {
 						// Close the session
 						return chat.sessionClose();
 					};
+				} else if (!form.length) {
+					zammadDebugMessage('The Fallback Form is missing. Maybe a caching issue?');
 				}
 			}
 		} else {

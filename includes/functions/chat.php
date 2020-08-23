@@ -87,7 +87,7 @@ function zammad_init_chat($chat_id = 1, $args = array())
     );
 
     // Localize Script
-    wp_add_inline_script('zammad_wp_chat', 'const chatOptions =' . json_encode($settings));
+    wp_add_inline_script('zammad_wp_chat', 'const chatOptions =' . json_encode($settings), 'before');
 
     //  Enqueue styles
     wp_enqueue_style('zammad_wp_chat');

@@ -8,6 +8,7 @@ jobs:
     name: Release new tagged version
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       # Build Release Zip for GitHub
       - name: ZIP Release
         uses: thedoctor0/zip-release@master
@@ -27,7 +28,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: Follow the development on https://github.com/ouun/zammad-wp
           draft: false
-          prerelease: false
+          prerelease: true
 
       # One ZIP upload directly to Release
       - name: Upload Release Asset
