@@ -122,13 +122,27 @@ jQuery(function initForm($) {
 						};
 					};
 
+					chat.showLoader = () => {
+						zammadDebugMessage('Show loader...');
+						// Get the Zammad loader view
+						const loader = chat.el
+							.find('.zammad-chat-modal')
+							.html(chat.view('loader')());
+						// Allow to override the loading text
+						if (chatOptions.loaderWaitingMessage.length) {
+							zammadChatModalText(chatOptions.loaderWaitingMessage);
+						}
+						return loader;
+					};
+
 					chat.onQueue = () => {
 						zammadDebugMessage('Waiting for an agent to answer...');
 						zammadDebugMessage(chat, true);
 
 						// Reducing the time we wait for an agent to answer
-						chat.waitingListTimeout.options.timeout = '0';
-						chat.waitingListTimeout.options.timeoutIntervallCheck = '0.2';
+						chat.waitingListTimeout.options.timeout = chatOptions.timeout;
+						chat.waitingListTimeout.options.timeoutIntervallCheck =
+							chatOptions.timeoutIntervallCheck;
 
 						// Let the user know that we are waiting
 						zammadChatModalText(chatOptions.waitingListWaitingMessage);
@@ -143,7 +157,7 @@ jQuery(function initForm($) {
 
 						// Add reload functionality e.g. to buttons
 						form.find('.js-restart').on('click', function zammadReloadWindow() {
-							zammadDebugMessage('Reload Window...');
+							zammadDebugMessage('Reload Window to start new chat...');
 							window.location.reload();
 						});
 

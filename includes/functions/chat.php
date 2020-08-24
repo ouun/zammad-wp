@@ -71,8 +71,11 @@ function zammad_init_chat($chat_id = 1, $args = array())
                 'inactiveClass'             => 'is-inactive',
                 'cssAutoload'               => (bool) false,
                 'cssUrl '                   => null,
+                'timeout'                   => '0.4', // Minutes to wait till timeout when waiting for an agents answer
+                'timeoutIntervallCheck'     => '0.5', // Interval to check for timeout
                 'formFallback'              => (bool) false,
                 'formFallbackMessage'       => __('Please send us your request and we will answer as soon as possible', 'zammad-wp'),
+                'loaderWaitingMessage'      => '',
                 'waitingListWaitingMessage' => __('Sorry for the delay, still connecting.', 'zammad-wp'),
                 'waitingListTimeoutMessage' => sprintf(
                 	// translators: Placeholder is "click here" link text

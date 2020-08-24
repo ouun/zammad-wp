@@ -184,6 +184,10 @@ $black: #000;
 	}
 }
 
+.zammad-chat-is-open .zammad-chat-modal {
+  flex-direction: column;
+}
+
 .zammad-chat-modal {
 	align-items: center;
 	background: $white;
@@ -233,7 +237,7 @@ $black: #000;
 }
 
 .zammad-chat-modal .zammad-chat-loading-animation {
-	margin-right: 8px;
+	margin-bottom: 8px;
 	vertical-align: middle;
 }
 

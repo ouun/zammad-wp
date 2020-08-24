@@ -13,7 +13,7 @@
  */
 
 // Useful global constants.
-define('ZAMMAD_WP_VERSION', '0.4.0');
+define('ZAMMAD_WP_VERSION', '0.5.0');
 define('ZAMMAD_WP_URL', plugin_dir_url(__FILE__));
 define('ZAMMAD_WP_PATH', plugin_dir_path(__FILE__));
 define('ZAMMAD_WP_INC', ZAMMAD_WP_PATH . 'includes/');
