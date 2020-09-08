@@ -1,3 +1,3 @@
 /**
- * 10up Scaffold
+ * Zammad for Wordpress Scaffold
  */

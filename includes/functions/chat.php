@@ -78,7 +78,7 @@ function zammad_init_chat($chat_id = 1, $args = array())
                 'loaderWaitingMessage'      => '',
                 'waitingListWaitingMessage' => __('Sorry for the delay, still connecting.', 'zammad-wp'),
                 'waitingListTimeoutMessage' => sprintf(
-                	// translators: Placeholder is "click here" link text
+                    // translators: Placeholder is "click here" link text
                     __(
                         'We do not want to let you wait anytime longer. Please feel free to use the form instead or <a class="js-restart" href="#restart">%s</a> to try again.',
                         'zammad-wp'

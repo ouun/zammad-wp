@@ -164,6 +164,58 @@ jQuery(function initForm($) {
 						// Close the session
 						return chat.sessionClose();
 					};
+
+					// Toggle/minimize chat window instead of closing connection
+					chat.toggle = (event) => {
+						if (chat.isOpen) {
+							zammadDebugMessage('Close or Minimize');
+							return chat.maybeMinimize(event);
+						}
+						zammadDebugMessage('Open');
+						return chat.open(event);
+					};
+
+					// Adds a minimize functionality
+					chat.maybeMinimize = (event) => {
+						zammadDebugMessage(
+							'Minimize or close chat window, depending on chat status.',
+						);
+
+						// If there is no session ID OR waiting in queue OR no messages yet, we close the window and end connection
+						if (!chat.sessionId || chat.inQueue || !chat.lastAddedType) {
+							// Close chat as it is the default
+							zammadDebugMessage('Close chat.');
+							return chat.close(event);
+						}
+
+						// Otherwise we proceed to minimize
+						zammadDebugMessage('Minimize running chat.');
+
+						const remainerHeight =
+							chat.el.height() - chat.el.find('.zammad-chat-header').outerHeight();
+
+						return chat.el.animate(
+							{
+								bottom: -remainerHeight,
+							},
+							500,
+							function minimizeChatWindow() {
+								chat.el.css('bottom', '');
+								chat.el.removeClass('zammad-chat-is-open');
+								chat.isOpen = false;
+								chat.isMinimized = true;
+							},
+						);
+					};
+
+					// Extends function scrollToBottom( to open minimized chat window if new message arrives
+					chat.originalScrollToBottom = chat.scrollToBottom;
+					chat.scrollToBottom = (arg) => {
+						if (chat.isMinimized && !chat.isOpen) {
+							chat.open();
+						}
+						chat.originalScrollToBottom(arg);
+					};
 				} else if (!form.length) {
 					zammadDebugMessage('The Fallback Form is missing. Maybe a caching issue?');
 				}
