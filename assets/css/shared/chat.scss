@@ -35,6 +35,12 @@ $black: #000;
 
 .zammad-chat.zammad-chat-is-shown {
 	opacity: 1;
+
+  	&:not(.zammad-chat-is-open) {
+	  .zammad-chat-modal-text {
+		display: none;
+	  }
+	}
 }
 
 .zammad-chat.zammad-chat-is-open {
