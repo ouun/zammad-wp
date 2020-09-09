@@ -43,8 +43,8 @@ function zammad_init_form($form_element = '#feedback-form', $args = array())
             'formElement'       => $form_element,
             'debug'             => false,
             'showTitle'         => true,
-            'messageTitle'      => 'Contact us',
-            'messageSubmit'     => 'Submit',
+            'messageTitle'      => __('Contact us', 'zammad-wp'),
+            'messageSubmit'     => __('Submit', 'zammad-wp'),
             'modal'             => true,
             'attachmentSupport' => true,
             'noCSS'             => true, # Loading the CSS from the plugin
