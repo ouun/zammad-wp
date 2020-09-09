@@ -4,7 +4,7 @@ Donate link: 		https://www.paypal.me/ouun
 Tags:				zammad, live-chat, ticketing, forms, feedback
 Requires at least: 4.5
 Tested up to:      5.5.1
-Stable tag:        0.6.0
+Stable tag:        0.7.0
 
 This plugin helps you embed Zammad Chats & Forms into your WordPress site and gives you access to the Zammad API if required.
 
@@ -24,6 +24,10 @@ Please see the [GitHub Repository](https://github.com/ouun/zammad-wp) for a comp
 Use `composer require ouun/zammad-wp` to install
 
 == Changelog ==
+
+= 0.7.0 =
+* Fix mobile button alignment
+* Various small bug fixes
 
 = 0.6.0 =
 * Minimize chat window while an active chat when clicking X
