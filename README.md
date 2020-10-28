@@ -25,7 +25,8 @@ define('ZAMMAD_USERNAME', 'username')
 define('ZAMMAD_PASSWORD', 'password')
 ```
 
-or if you prefere to authenticate via HTTP- or AUTH-Token:
+Besides using a combination of username and password, you can alternatively give a http_token or an oauth2_token. Important: You have to activate API access in Zammad.
+So if you prefer to authenticate via HTTP- or AUTH-Token, please set either:
 
 ```
 define('ZAMMAD_HTTP_TOKEN', 'token')
@@ -158,7 +159,7 @@ add_action('wp_footer', function () {
 You can change the default options of Zammad Form via `zammad_wp:form:defaults` filter.
 
 ```
-add_filter('zammad_wp:chat:defaults', function ($defaults) {
+add_filter('zammad_wp:form:defaults', function ($defaults) {
     return wp_parse_args(
         [
             'debug' => true,

@@ -1,13 +1,15 @@
 <?php
 
 /**
- * Plugin Name:  Zammad for WordPress
- * Plugin URI:   https://ouun.io
- * Description:  Integrate Zammad into WordPress
- * Author:       Philipp Wellmer <philipp@ouun.io>
- * License:      MIT
- * Text Domain:  zammad-wp
- * Domain Path: /languages
+ * Plugin Name:         Zammad for WordPress
+ * Plugin URI:          https://ouun.io
+ * Description:         Integrates Zammad Helpdesk into WordPress
+ * Author:              Philipp Wellmer <philipp@ouun.io>
+ * License:             GPL v2 or later
+ * License URI:         https://www.gnu.org/licenses/gpl-2.0.html
+ * Requires PHP:        7.2
+ * Text Domain:         zammad-wp
+ * Domain Path:         /languages
  *
  * @package ZammadWp
  */
@@ -22,6 +24,7 @@ define('ZAMMAD_WP_INC', ZAMMAD_WP_PATH . 'includes/');
 require_once ZAMMAD_WP_INC . 'functions/core.php';
 require_once ZAMMAD_WP_INC . 'functions/chat.php';
 require_once ZAMMAD_WP_INC . 'functions/form.php';
+require_once ZAMMAD_WP_INC . 'functions/hf-plugin-integration.php';
 
 // Activation/Deactivation.
 register_activation_hook(__FILE__, '\ZammadWp\Core\activate');

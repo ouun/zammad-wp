@@ -1,8 +1,8 @@
 {
   "name": "ouun/zammad-wp",
   "type": "wordpress-plugin",
-  "license": "MIT",
-  "description": "Integrate a Zammad Form as Block",
+  "license": "GPL-2.0-or-later",
+  "description": "Integrates Zammad Helpdesk into WordPress",
   "homepage": "https://ouun.io",
   "authors": [
     {
@@ -10,10 +10,10 @@
       "email": "philipp@ouun.io"
     }
   ],
-  "keywords": ["wordpress", "wordpress-block", "zammad"],
+  "keywords": ["wordpress", "wordpress-block", "zammad", "helpdesk", "livechat", "support"],
   "require": {
-    "php": ">=7.0",
-    "zammad/zammad-api-client-php": "^1.5"
+    "php": ">=7.2",
+    "zammad/zammad-api-client-php": "^2.0"
   },
   "autoload": {
     "psr-4": {
