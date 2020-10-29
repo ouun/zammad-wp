@@ -26,6 +26,13 @@ Use `composer require ouun/zammad-wp` to install
 
 == Changelog ==
 
+= 0.8.0 =
+* Adds HTML Forms Plugin integration
+* Adds support for complex forms with custom fields
+* Adds custom html/form as chat fallback
+* Extends, fixes & improves ZammadWP API-Wrapper
+* Various smaller fixes
+
 = 0.7.0 =
 * Fix mobile button alignment
 * Various small bug fixes
