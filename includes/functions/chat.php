@@ -26,38 +26,38 @@ function zammad_register_chat($chat_id = 1, $args = array())
         );
     }
 
-	do_action( 'zammad_wp:fallback_form:before', $args );
+    do_action('zammad_wp:fallback_form:before', $args);
 
     // A chat with form fallback requires additional form init, too.
     if (isset($args['formFallback']) && $args['formFallback']) {
-    	if( !isset( $args['formFallbackHTML'] ) || empty( $args['formFallbackHTML'] ) ) {
-    		// We use native Zammad Form
-		    if (function_exists('zammad_register_form')) {
-			    add_action('wp_footer', 'zammad_fallback_form_markup', 999);
-			    add_action('admin_footer', 'zammad_fallback_form_markup', 999);
+        if (!isset($args['formFallbackHTML']) || empty($args['formFallbackHTML'])) {
+            // We use native Zammad Form
+            if (function_exists('zammad_register_form')) {
+                add_action('wp_footer', 'zammad_fallback_form_markup', 999);
+                add_action('admin_footer', 'zammad_fallback_form_markup', 999);
 
-			    zammad_register_form(
-				    '#fallback-form',
-				    apply_filters(
-					    'zammad_wp:form:fallback',
-					    array(
-						    'modal' => false,
-					    )
-				    )
-			    );
-		    }
-	    } else {
-    		// Add custom markup before any other filter
-    		add_filter('zammad_wp:fallback_form:html', function () use ($args) {
-    			return $args['formFallbackHTML'];
-		    }, 5);
+                zammad_register_form(
+                    '#fallback-form',
+                    apply_filters(
+                        'zammad_wp:form:fallback',
+                        array(
+                            'modal' => false,
+                        )
+                    )
+                );
+            }
+        } else {
+            // Add custom markup before any other filter
+            add_filter('zammad_wp:fallback_form:html', function () use ($args) {
+                return $args['formFallbackHTML'];
+            }, 5);
 
-		    add_action('wp_head', 'zammad_fallback_form_markup', 999);
-		    add_action('admin_head', 'zammad_fallback_form_markup', 999);
-	    }
+            add_action('wp_head', 'zammad_fallback_form_markup', 999);
+            add_action('admin_head', 'zammad_fallback_form_markup', 999);
+        }
     }
 
-	do_action( 'zammad_wp:fallback_form:after', $args );
+    do_action('zammad_wp:fallback_form:after', $args);
 }
 
 /**
@@ -123,6 +123,6 @@ function zammad_init_chat($chat_id = 1, $args = array())
  */
 function zammad_fallback_form_markup($html = '')
 {
-	$html = apply_filters( 'zammad_wp:fallback_form:html', $html );
+    $html = apply_filters('zammad_wp:fallback_form:html', $html);
     echo '<div id="fallback-form" style="display: none;">' . $html . '</div>';
 }

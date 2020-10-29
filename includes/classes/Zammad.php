@@ -11,7 +11,7 @@ use ZammadWp\Zammad\User;
 class Zammad
 {
 
-	public $url;
+    public $url;
     private $username;
     private $password;
     private $http_token;
@@ -23,62 +23,62 @@ class Zammad
 
     private $options;
 
-	/**
-	 * Zammad constructor.
-	 *
-	 * @param array $options
-	 *
-	 * @return Client Client object
-	 */
+    /**
+     * Zammad constructor.
+     *
+     * @param array $options
+     *
+     * @return Client Client object
+     */
     public function __construct(array $options = [])
     {
-	    $this->options    = $options;
+        $this->options    = $options;
 
-	    $this->url        = defined('ZAMMAD_URL') ? ZAMMAD_URL :
-	        ( isset($options['url']) ? $options['url'] : null );
+        $this->url        = defined('ZAMMAD_URL') ? ZAMMAD_URL :
+            ( isset($options['url']) ? $options['url'] : null );
         $this->username   = defined('ZAMMAD_USERNAME') ? ZAMMAD_USERNAME :
             ( isset($options['username']) ? $options['username'] : null );
         $this->password   = defined('ZAMMAD_PASSWORD') ? ZAMMAD_PASSWORD :
-	        ( isset($options['password']) ? $options['password'] : null );
+            ( isset($options['password']) ? $options['password'] : null );
         $this->http_token = defined('ZAMMAD_HTTP_TOKEN') ? ZAMMAD_HTTP_TOKEN :
-	        ( isset($options['http_token']) ? $options['http_token'] : null );
+            ( isset($options['http_token']) ? $options['http_token'] : null );
         $this->auth_token = defined('ZAMMAD_AUTH_TOKEN') ? ZAMMAD_AUTH_TOKEN :
-	        ( isset($options['oauth2_token']) ? $options['oauth2_token'] : null );
+            ( isset($options['oauth2_token']) ? $options['oauth2_token'] : null );
 
         $this->onBehalf   = isset($options['on_behalf_user']) ? $options['on_behalf_user'] :
-	        ( defined('ZAMMAD_ON_BEHALF_USER') ? ZAMMAD_ON_BEHALF_USER : null );
+            ( defined('ZAMMAD_ON_BEHALF_USER') ? ZAMMAD_ON_BEHALF_USER : null );
         $this->debug      = isset($options['debug']) ? $options['debug'] :
-	        ( defined('ZAMMAD_DEBUG') ? ZAMMAD_DEBUG : false );
+            ( defined('ZAMMAD_DEBUG') ? ZAMMAD_DEBUG : false );
         $this->timeout    = isset($options['timeout']) ? $options['timeout'] :
-	        ( defined('ZAMMAD_TIMEOUT') ? ZAMMAD_TIMEOUT : '15' );
+            ( defined('ZAMMAD_TIMEOUT') ? ZAMMAD_TIMEOUT : '15' );
 
         return $this->client();
     }
 
-	/**
-	 * Client-Wrapper for Zammad connection
-	 *
-	 * @return Client Client Object
-	 */
+    /**
+     * Client-Wrapper for Zammad connection
+     *
+     * @return Client Client Object
+     */
     protected function client()
     {
-	    $client = new Client(
-		    array(
-			    'url'          => $this->url,
-			    'username'     => $this->username,
-			    'password'     => $this->password,
-			    'http_token'   => $this->http_token,
-			    'oauth2_token' => $this->auth_token,
-			    'timeout'      => $this->timeout,
-			    'debug'        => $this->debug
-		    )
-	    );
+        $client = new Client(
+            array(
+                'url'          => $this->url,
+                'username'     => $this->username,
+                'password'     => $this->password,
+                'http_token'   => $this->http_token,
+                'oauth2_token' => $this->auth_token,
+                'timeout'      => $this->timeout,
+                'debug'        => $this->debug
+            )
+        );
 
-	    $client->unsetOnBehalfOfUser();
+        $client->unsetOnBehalfOfUser();
 
-	    if( $this->onBehalf ) {
-		    $client->setOnBehalfOfUser($this->onBehalf);
-	    }
+        if ($this->onBehalf) {
+            $client->setOnBehalfOfUser($this->onBehalf);
+        }
 
         return $client;
     }
