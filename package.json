@@ -1,11 +1,11 @@
 {
-  "name": "plugin-scaffold",
+  "name": "zammad-wp",
   "version": "1.0.0",
-  "description": "10up Plugin Scaffold",
+  "description": "Zammad integration for WordPress",
   "author": {
-    "name": "10up",
-    "email": "info@10up.com",
-    "url": "https://10up.com",
+    "name": "Philipp Wellmer",
+    "email": "philipp@ouun.io",
+    "url": "https://ouun.io",
     "role": "developer"
   },
   "scripts": {

@@ -33,10 +33,12 @@ jQuery(function initForm($) {
 		const badgeTitle = newTitle || form.find('h2').text();
 
 		// Hide the form title
-		form.find('h2').hide();
+		if (badgeTitle.length > 0) {
+			form.find('h2').hide();
 
-		// Update Chat Badge Title
-		$('.zammad-chat-welcome-text').text(badgeTitle);
+			// Update Chat Badge Title
+			$('.zammad-chat-welcome-text').text(badgeTitle);
+		}
 	}
 
 	/**

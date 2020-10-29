@@ -11,11 +11,9 @@ use ZammadWp\Zammad;
  * Add new action to HTML Forms Plugin
  */
 add_filter('hf_available_form_actions', function( $actions ) {
-
+	// Add Zammad Action
 	$actions['zammad'] = __('Create Zammad Ticket', 'zammad-wp');
-
 	return $actions;
-
 }, 20);
 
 /**
