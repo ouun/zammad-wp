@@ -1,10 +1,9 @@
 <?php
 /**
  * Integrate Zammad-WP as Action into
- * Ibericode's awesome zammad-wp Plugin
+ * HTML Forms Plugin by Ibericode
  * @see https://github.com/ibericode/zammad-wp
  */
-
 
 use ZammadWp\Zammad;
 
@@ -26,67 +25,63 @@ add_action('hf_output_form_action_zammad_settings', function($settings, $index) 
 
 	$settings = array_merge( zammad_hf_default_settings(), $settings );
 
-	/*
-	if (!defined('ZAMMAD_URL') || !defined('ZAMMAD_HTTP_TOKEN')  || !defined('ZAMMAD_AUTH_TOKEN')) {
-		echo __('We need API access. You need to define Zammad Authentication in you wp-config.php as per the install instructions.');
-		return;
-	}
-	*/
+	$zammad = new ZammadWp\Zammad([
+		// todo: Allow overwriting options with form settings
+	]);
 
-	$groups = Zammad::all('group');
-	$ticket_priority = Zammad::all('ticket_priority');
-	$ticket_state = Zammad::all('ticket_state');
-
+	$groups = $zammad->group()->allGroups();
+	$ticket_priority = $zammad->ticket()->allTicketPriorities();
+	$ticket_state = $zammad->ticket()->allTicketStates();
 
 	?>
-	<span class="hf-action-summary"><?php printf( 'From %s. To %s.', $settings['title'], $settings['article']['content_type'] ); ?></span>
+	<span class="hf-action-summary"><?php printf( '<b>%s</b>: Create ticket with state <b>%s</b> for Group <b>%s</b> with priority <b>%s</b>.', $zammad->url, $settings['state'], $settings['group'], $settings['priority'] ); ?></span>
 	<input type="hidden" name="form[settings][actions][<?php echo $index; ?>][type]" value="zammad" />
 
 	<table class="form-table">
 		<tr>
-			<th><label><?php echo __( 'Zammad Group', 'zammad-wp' ); ?> <span class="hf-required">*</span></label></th>
+			<th><label for="group"><?php echo __( 'Zammad Group', 'zammad-wp' ); ?> <span class="hf-required">*</span></label></th>
 			<td>
-				<select name="form[settings][actions][<?php echo $index; ?>][group_id]" id="group_id" required>
+				<select name="form[settings][actions][<?php echo $index; ?>][group]" id="group" required>
 					<?php foreach ($groups as $group) {
-						$selected = $settings['group_id'] == $group->getValue('id') ? 'selected' : '';
-						echo '<option value="' . $group->getValue('id') . '" ' . $selected . '>' . $group->getValue('name') . '</option>';
+						$selected = $settings['group'] == $group->getValue('name') ? 'selected' : '';
+						echo '<option value="' . $group->getValue('name') . '" ' . $selected . '>' . $group->getValue('name') . '</option>';
 					} ?>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<th><label><?php echo __( 'Ticket Priority', 'zammad-wp' ); ?> <span class="hf-required">*</span></label></th>
+			<th><label for="priority"><?php echo __( 'Ticket Priority', 'zammad-wp' ); ?> <span class="hf-required">*</span></label></th>
 			<td>
-				<select name="form[settings][actions][<?php echo $index; ?>][priority_id]" id="priority_id" required>
+				<select name="form[settings][actions][<?php echo $index; ?>][priority]" id="priority" required>
 					<?php foreach ($ticket_priority as $priority) {
-						$selected = $settings['priority_id'] == $priority->getValue('id') ? 'selected' : '';
-						echo '<option value="' . $priority->getValue('id') . '" ' . $selected . '>' . $priority->getValue('name') . '</option>';
+						$selected = $settings['priority'] == $priority->getValue('name') ? 'selected' : '';
+						echo '<option value="' . $priority->getValue('name') . '" ' . $selected . '>' . $priority->getValue('name') . '</option>';
 					} ?>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<th><label><?php echo __( 'Ticket State', 'zammad-wp' ); ?> <span class="hf-required">*</span></label></th>
+			<th><label for="state"><?php echo __( 'Ticket State', 'zammad-wp' ); ?> <span class="hf-required">*</span></label></th>
 			<td>
-				<select name="form[settings][actions][<?php echo $index; ?>][state_id]" id="state_id" required>
+				<select name="form[settings][actions][<?php echo $index; ?>][state]" id="state" required>
 					<?php foreach ($ticket_state as $state) {
-						$selected = $settings['state_id'] == $state->getValue('id') ? 'selected' : '';
-						echo '<option value="' . $state->getValue('id') . '" ' . $selected . '>' . $state->getValue('name') . '</option>';
+						$selected = $settings['state'] == $state->getValue('name') ? 'selected' : '';
+						echo '<option value="' . $state->getValue('name') . '" ' . $selected . '>' . $state->getValue('name') . '</option>';
 					} ?>
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<th><label><?php echo __( 'Ticket Subject', 'zammad-wp' ); ?></label></th>
+			<th><label for="subject"><?php echo __( 'Ticket Subject', 'zammad-wp' ); ?></label></th>
 			<td>
-				<input name="form[settings][actions][<?php echo $index; ?>][subject]" value="<?php echo esc_attr( $settings['subject'] ); ?>" type="text" class="regular-text" placeholder="<?php echo esc_attr( $settings['subject'] ); ?>" />
+				<input id="subject" name="form[settings][actions][<?php echo $index; ?>][subject]" value="<?php echo esc_attr( $settings['subject'] ); ?>" type="text" class="regular-text" placeholder="<?php echo esc_attr( $settings['subject'] ); ?>" />
 				<p class="help"><?php _e( 'Define a [SUBJECT] field and the input will overwrite this.', 'zammad-wp' ); ?></p>
 			</td>
 		</tr>
 		<tr>
-			<th><label><?php echo __( 'Message', 'zammad-wp' ); ?> <span class="hf-required">*</span></label></th>
+			<th><label for="message"><?php echo __( 'Message', 'zammad-wp' ); ?> <span class="hf-required">*</span></label></th>
 			<td>
-				<textarea name="form[settings][actions][<?php echo $index; ?>][message]" rows="8" class="widefat" placeholder="[MESSAGE]"><?php echo esc_textarea( $settings['message'] ); ?></textarea>
+				<textarea id="message" name="form[settings][actions][<?php echo $index; ?>][message]" rows="8" class="widefat" placeholder="[MESSAGE]"><?php echo esc_textarea( $settings['message'] ); ?></textarea>
 				<p class="help">
 					<?php _e( 'This allows you to customize the ticket body. ', 'zammad-wp' ); ?>
 					<?php _e( 'You can use the following variables (in all fields): ', 'zammad-wp' ); ?>
@@ -95,9 +90,9 @@ add_action('hf_output_form_action_zammad_settings', function($settings, $index) 
 			</td>
 		</tr>
 		<tr>
-			<th><label><?php echo __( 'Tags', 'zammad-wp' ); ?></label></th>
+			<th><label for="tags"><?php echo __( 'Tags', 'zammad-wp' ); ?></label></th>
 			<td>
-				<input name="form[settings][actions][<?php echo $index; ?>][tags]" value="<?php echo esc_attr( $settings['tags'] ); ?>" type="text" class="regular-text" />
+				<input id="tags" name="form[settings][actions][<?php echo $index; ?>][tags]" value="<?php echo esc_attr( $settings['tags'] ); ?>" type="text" class="regular-text" />
 				<p class="help"><?php _e( 'Comma separated list of tags.', 'zammad-wp' ); ?></p>
 			</td>
 		</tr>
@@ -116,9 +111,14 @@ if( !function_exists('zammad_hf_process_form_action') ) {
 			HTML_Forms\Form $form
 	) {
 
-		if ( empty( $settings['group_id'] ) ) {
+		if ( empty( $settings['group'] ) ) {
 			return false;
 		}
+
+		// Connect
+		$zammad = new ZammadWp\Zammad([
+			// todo: Allow overwriting options
+		]);
 
 		// Get action settings
 		$settings = array_merge( zammad_hf_default_settings(), $settings );
@@ -154,12 +154,15 @@ if( !function_exists('zammad_hf_process_form_action') ) {
 
 		// Search for existing user in Zammad
 		// @see: https://docs.zammad.org/en/latest/api/user.html
-		$users = Zammad::search( 'user', $email_address );
+		$users = $zammad->user()->searchUsers($email_address, 1, 1);
 
 		// @see: https://docs.zammad.org/en/latest/api/user.html#create
 		$user_meta = apply_filters( 'zammad_wp:hf_action:user_fields', (array) [
 				'firstname' => $firstname,
 				'lastname'  => $lastname,
+				'preferences' => [
+						'locale' => get_locale()
+				]
 		], $submission );
 
 		if ( $users ) {
@@ -171,11 +174,16 @@ if( !function_exists('zammad_hf_process_form_action') ) {
 			$user->save();
 		} else {
 			// No user found, create a new one
-			$user_id = Zammad::user()->createUser( array_merge( [
+			$user_id = $zammad->user()->createUser( array_merge( [
 					'login' => $email_address,
 					'email' => $email_address,
 			], $user_meta ) )->getValue( 'id' );
 		}
+
+		// Set on behalf
+		$customer = new ZammadWp\Zammad([
+			'on_behalf_user' => $user_id
+		]);
 
 		// Prepare ticket values
 		// @see: https://docs.zammad.org/en/latest/api/ticket.html#create
@@ -188,20 +196,19 @@ if( !function_exists('zammad_hf_process_form_action') ) {
 
 		// Prepare Ticket
 		$ticket = apply_filters( 'zammad_wp:hf_action:ticket_fields', [
-				'title'       => $subject,
-				'customer_id' => $user_id,
-				// 'customer_id' => 'guess:' . $email_address,
-				'group_id'    => (string) $settings['group_id'],
-				'priority_id' => (string) $settings['priority_id'],
-				'state_id'    => (string) $settings['state_id'],
-				'tags'        => $tags
+				'title'       	=> $subject,
+				'customer_id'	=> $user_id,
+				'group'			=> (string) $settings['group'],
+				'priority' 		=> (string) $settings['priority'],
+				'state'    		=> (string) $settings['state'],
+				'tags'        	=> $tags
 		], $submission );
 
 		// Prepare Article
+		// @see: https://community.zammad.org/t/custom-form-to-create-new-ticket-via-api/2068/2
 		$ticket['article'] = apply_filters( 'zammad_wp:hf_action:article_fields', [
-				'to'			=> $firstname . ' ' . $lastname . ' <' . $email_address . '>',
+				'sender'		=> 'Customer',
 				'subject'		=> $subject,
-				//'body'			=> $data['MESSAGE'] ?: $message,
 				'body'			=> $message,
 				'content_type'	=> 'text/html',
 				'type'			=> 'web',
@@ -209,7 +216,7 @@ if( !function_exists('zammad_hf_process_form_action') ) {
 		], $submission );
 
 		// Create the ticket
-		$ticket = Zammad::ticket()->createTicket( $ticket );
+		$ticket = $customer->ticket()->createTicket( $ticket );
 
 		// Ticket creation success/error
 		if ( is_int( $ticket ) ) {
@@ -224,10 +231,9 @@ function zammad_hf_default_settings() {
 	return array(
 		// Ticket defaults
 		'title'			=> '[SUBJECT]',
-		'group_id'		=> null,
-		'state_id'		=> null,
-		'priority_id'	=> null,
-		'customer_id'	=> null,
+		'group'			=> null,
+		'state'			=> null,
+		'priority'		=> null,
 
 		// Article defaults
 		'subject'		=> '[SUBJECT]',

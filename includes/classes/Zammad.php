@@ -11,69 +11,99 @@ use ZammadWp\Zammad\User;
 class Zammad
 {
 
+	public $url;
     private $username;
     private $password;
-    private $url;
+    private $http_token;
+    private $auth_token;
 
-    public function __construct()
+    public $onBehalf;
+    public $debug;
+    public $timeout;
+
+    private $options;
+
+	/**
+	 * Zammad constructor.
+	 *
+	 * @param array $options
+	 *
+	 * @return Client Client object
+	 */
+    public function __construct(array $options = [])
     {
-        $this->username   = defined('ZAMMAD_USERNAME') ? ZAMMAD_USERNAME : null;
-        $this->password   = defined('ZAMMAD_PASSWORD') ? ZAMMAD_PASSWORD : null;
-        $this->http_token = defined('ZAMMAD_HTTP_TOKEN') ? ZAMMAD_HTTP_TOKEN : null;
-        $this->auth_token = defined('ZAMMAD_AUTH_TOKEN') ? ZAMMAD_AUTH_TOKEN : null;
-        $this->url        = defined('ZAMMAD_URL') ? ZAMMAD_URL : null;
-        $this->onBehalf   = defined('ZAMMAD_ON_BEHALF_USER') ? ZAMMAD_ON_BEHALF_USER : false;
-        $this->debug      = defined('ZAMMAD_DEBUG') ? ZAMMAD_DEBUG : false;
-        $this->timeout    = defined('ZAMMAD_TIMEOUT') ? ZAMMAD_TIMEOUT : 15;
+	    $this->options    = $options;
+
+	    $this->url        = defined('ZAMMAD_URL') ? ZAMMAD_URL :
+	        ( isset($options['url']) ? $options['url'] : null );
+        $this->username   = defined('ZAMMAD_USERNAME') ? ZAMMAD_USERNAME :
+            ( isset($options['username']) ? $options['username'] : null );
+        $this->password   = defined('ZAMMAD_PASSWORD') ? ZAMMAD_PASSWORD :
+	        ( isset($options['password']) ? $options['password'] : null );
+        $this->http_token = defined('ZAMMAD_HTTP_TOKEN') ? ZAMMAD_HTTP_TOKEN :
+	        ( isset($options['http_token']) ? $options['http_token'] : null );
+        $this->auth_token = defined('ZAMMAD_AUTH_TOKEN') ? ZAMMAD_AUTH_TOKEN :
+	        ( isset($options['oauth2_token']) ? $options['oauth2_token'] : null );
+
+        $this->onBehalf   = isset($options['on_behalf_user']) ? $options['on_behalf_user'] :
+	        ( defined('ZAMMAD_ON_BEHALF_USER') ? ZAMMAD_ON_BEHALF_USER : null );
+        $this->debug      = isset($options['debug']) ? $options['debug'] :
+	        ( defined('ZAMMAD_DEBUG') ? ZAMMAD_DEBUG : false );
+        $this->timeout    = isset($options['timeout']) ? $options['timeout'] :
+	        ( defined('ZAMMAD_TIMEOUT') ? ZAMMAD_TIMEOUT : '15' );
+
+        return $this->client();
     }
 
+	/**
+	 * Client-Wrapper for Zammad connection
+	 *
+	 * @return Client Client Object
+	 */
     protected function client()
     {
-        $client = new Client(
-            array(
-                'url'          => $this->url,
-                'username'     => $this->username,
-                'password'     => $this->password,
-                'http_token'   => $this->http_token,
-                'oauth2_token' => $this->auth_token,
-            )
-        ) ? : null;
+	    $client = new Client(
+		    array(
+			    'url'          => $this->url,
+			    'username'     => $this->username,
+			    'password'     => $this->password,
+			    'http_token'   => $this->http_token,
+			    'oauth2_token' => $this->auth_token,
+			    'timeout'      => $this->timeout,
+			    'debug'        => $this->debug
+		    )
+	    );
 
-        if (! empty($this->onBehalf)) {
-            $client->setOnBehalfOfUser($this->onBehalf) ? : null;
-        }
+	    $client->unsetOnBehalfOfUser();
 
-        if ($this->debug === 'true') {
-            $client->debug = true;
-        }
+	    if( $this->onBehalf ) {
+		    $client->setOnBehalfOfUser($this->onBehalf);
+	    }
 
-        if (! empty($this->timeout)) {
-            $client->timeout = (int) $this->timeout;
-        }
         return $client;
     }
 
-    public static function ticket()
+    public function ticket()
     {
-        return new Ticket();
+        return new Ticket($this->options);
     }
 
-    public static function user()
+    public function user()
     {
-        return new User();
+        return new User($this->options);
     }
 
-    public static function group()
+    public function group()
     {
-        return new Group();
+        return new Group($this->options);
     }
 
-    public static function organization()
+    public function organization()
     {
-        return new Organization();
+        return new Organization($this->options);
     }
 
-    public static function search($type, $string, $page = null, $objects_per_page = null)
+    public function search($type, $string, $page = null, $objects_per_page = null)
     {
         switch ($type) {
             case 'ticket':
@@ -90,7 +120,7 @@ class Zammad
         }
     }
 
-    public static function all($type, $page = null, $objects_per_page = null)
+    public function all($type, $page = null, $objects_per_page = null)
     {
         switch ($type) {
             case 'user':
@@ -116,7 +146,7 @@ class Zammad
         }
     }
 
-    public static function create($type, $array)
+    public function create($type, $array)
     {
         switch ($type) {
             case 'ticket':
@@ -145,7 +175,7 @@ class Zammad
         }
     }
 
-    public static function find($type, $id)
+    public function find($type, $id)
     {
         switch ($type) {
             case 'ticket':
@@ -174,7 +204,7 @@ class Zammad
         }
     }
 
-    public static function update($type, $id, $array)
+    public function update($type, $id, $array)
     {
         switch ($type) {
             case 'ticket':
@@ -203,7 +233,7 @@ class Zammad
         }
     }
 
-    public static function delete($type, $id)
+    public function delete($type, $id)
     {
         switch ($type) {
             case 'ticket':
@@ -219,7 +249,7 @@ class Zammad
                 return self::ticket()->deleteTicketState($id);
                 break;
             case 'ticket_article':
-                return self::ticket()->deletTicketArticle($id);
+                return self::ticket()->deleteTicketArticle($id);
                 break;
             case 'user':
                 return self::user()->deleteUser($id);

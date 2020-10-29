@@ -11,7 +11,6 @@ use ZammadWp\Zammad;
 class Ticket extends Zammad
 {
 
-
     // Ticket functions
 
     /**
