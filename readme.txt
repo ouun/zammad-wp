@@ -26,6 +26,11 @@ Use `composer require ouun/zammad-wp` to install
 
 == Changelog ==
 
+= 0.8.1 =
+* Various fixes
+* Move documentation to Wiki: https://github.com/ouun/zammad-wp/wiki
+* Exit Pre-Release state on GitHub
+
 = 0.8.0 =
 * Adds HTML Forms Plugin integration
 * Adds support for complex forms with custom fields
