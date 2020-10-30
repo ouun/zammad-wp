@@ -28,7 +28,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: Follow the development on https://github.com/ouun/zammad-wp
           draft: false
-          prerelease: true
+          prerelease: false
 
       # One ZIP upload directly to Release
       - name: Upload Release Asset
