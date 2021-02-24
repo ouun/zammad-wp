@@ -170,10 +170,10 @@ if (!function_exists('zammad_hf_process_form_action')) {
         ], $submission);
 
         if ($users) {
-			// Get first user result & update data
-			$user = $users[0]->setValues($user_meta);
-			// Get user id
-			$user_id = $users[0]->getValue('id');
+            // Get first user result & update data
+            $user = $users[0]->setValues($user_meta);
+            // Get user id
+            $user_id = $users[0]->getValue('id');
             // Save additional data
             $user->save();
         } else {
