@@ -27,7 +27,7 @@ jobs:
         with:
           path: '.'
           filename: 'zammad-wp-release.zip'
-          exclusions: '/tests/* /config/* /*.js /*.json /*.lock .* *.git* *.xml*'
+          exclusions: '/tests/* /assets/* /config/* /*.config.js /*.json /*.lock .* *.git* *.xml*'
 
       # Create GitHub Release
       - name: Create Release
