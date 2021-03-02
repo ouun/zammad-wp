@@ -15,16 +15,26 @@ Please see the [GitHub Repository](https://github.com/ouun/zammad-wp) for a comp
 
 == Installation ==
 
+= Composer Package (recommended) =
+
+Use `composer require ouun/zammad-wp` to install plugin and dependencies.
+
 = Manual Installation =
+
+Download latest version and install it as a regular WordPress Plugin from:
+https://github.com/ouun/zammad-wp/releases/latest/download/zammad-wp.zip
 
 1. Upload the entire `/zammad-wp` directory to the `/wp-content/plugins/` directory.
 2. Activate Zammad for WordPress through the 'Plugins' menu in WordPress.
 
-= Composer Package =
-
-Use `composer require ouun/zammad-wp` to install
-
 == Changelog ==
+
+= 0.8.3 =
+* Enh: Adds(test) support for GitHub Updater: https://github.com/afragen/github-updater
+* Fix: Vendor folder missing from compiled download ZIP
+
+= 0.8.2 =
+* Various fixes
 
 = 0.8.1 =
 * Various fixes
