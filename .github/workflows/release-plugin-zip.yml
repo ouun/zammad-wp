@@ -8,14 +8,26 @@ jobs:
     name: Release new tagged version
     runs-on: ubuntu-latest
     steps:
+      # Checkout Master branch
       - uses: actions/checkout@master
+
+      # Install PHP and Composer
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+
+      # Install Composer Deps
+      - uses: "ramsey/composer-install@v1"
+        with:
+          composer-options: "--no-dev --prefer-dist --no-interaction --quiet --optimize-autoloader"
+
       # Build Release Zip for GitHub
       - name: ZIP Release
         uses: thedoctor0/zip-release@master
         with:
           path: '.'
           filename: 'zammad-wp-release.zip'
-          exclusions: '*.git* *.circleci* *.DS_Store* .wordpress-org .gitattributes .gitignore .distignore .idea'
+          exclusions: '/tests/* /config/* /*.js /*.json /*.lock .* *.git* *.xml*'
 
       # Create GitHub Release
       - name: Create Release
