@@ -38,7 +38,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-          body: Follow the development on https://github.com/ouun/zammad-wp
+          body: Find Changelog here https://github.com/ouun/zammad-wp/blob/master/readme.txt
           draft: false
           prerelease: false
 
