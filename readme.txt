@@ -4,8 +4,8 @@ Donate link: 		https://www.paypal.me/ouun
 Tags:				zammad, live-chat, ticketing, forms, feedback
 Requires at least: 4.5
 Requires PHP:      7.2
-Tested up to:      5.5.1
-Stable tag:        0.7.0
+Tested up to:      5.7
+Stable tag:        0.8.3
 
 This plugin helps you embed Zammad Chats & Forms into your WordPress site and gives you access to the Zammad API if required.
 
