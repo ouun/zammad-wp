@@ -23,10 +23,13 @@ function setup()
 
     add_action('init', $n('i18n'));
     add_action('init', $n('init'));
-    add_action('wp_enqueue_scripts', $n('scripts'));
-    add_action('wp_enqueue_scripts', $n('styles'));
-    add_action('admin_enqueue_scripts', $n('admin_scripts'));
-    add_action('admin_enqueue_scripts', $n('admin_styles'));
+
+	if(defined('ZAMMAD_URL')) {
+		add_action('wp_enqueue_scripts', $n('scripts'));
+		add_action('wp_enqueue_scripts', $n('styles'));
+		add_action('admin_enqueue_scripts', $n('admin_scripts'));
+		add_action('admin_enqueue_scripts', $n('admin_styles'));
+	}
 
     // Hook to allow async or defer on asset loading.
     add_filter('script_loader_tag', $n('script_loader_tag'), 10, 2);
