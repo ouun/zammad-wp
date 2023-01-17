@@ -4,8 +4,8 @@ Donate link: 		https://www.paypal.me/ouun
 Tags:				zammad, live-chat, ticketing, forms, feedback
 Requires at least: 4.5
 Requires PHP:      7.2
-Tested up to:      5.7
-Stable tag:        0.8.3
+Tested up to:      6.1
+Stable tag:        0.9.0
 
 This plugin helps you embed Zammad Chats & Forms into your WordPress site and gives you access to the Zammad API if required.
 
@@ -26,8 +26,14 @@ https://github.com/ouun/zammad-wp/releases/latest/download/zammad-wp.zip
 
 1. Upload the entire `/zammad-wp` directory to the `/wp-content/plugins/` directory.
 2. Activate Zammad for WordPress through the 'Plugins' menu in WordPress.
+3. Follow instructions in the [Wiki](https://github.com/ouun/zammad-wp/wiki).
 
 == Changelog ==
+
+= 0.9.0 =
+* Enh: Forms now attach uploaded files to Zammad tickets
+* Enh: Update Dependencies
+* Fix: Forms: Fix handling if singe name field only contains single word
 
 = 0.8.3 =
 * Enh: Adds(test) support for GitHub Updater: https://github.com/afragen/github-updater

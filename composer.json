@@ -11,23 +11,35 @@
     }
   ],
   "keywords": ["wordpress", "wordpress-block", "zammad", "helpdesk", "livechat", "support"],
-  "require": {
-    "php": ">=7.2",
-    "zammad/zammad-api-client-php": "^2.0"
-  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:ouun/zammad-wp-pro.git"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "ZammadWp\\": "includes/classes/"
     }
   },
+  "require": {
+    "php": ">=7.2",
+    "ouun/zammad-wp-pro": "dev-main",
+    "zammad/zammad-api-client-php": "^2.0"
+  },
   "require-dev": {
-    "phpunit/phpunit": "^8.2",
-    "10up/wp_mock": "dev-master",
+    "phpunit/phpunit": "^9.5",
+    "10up/wp_mock": "dev-trunk",
     "10up/phpcs-composer": "dev-master",
     "wp-coding-standards/wpcs": "*"
   },
   "scripts": {
     "lint": "phpcs . -s",
     "lint-fix": "phpcbf ."
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

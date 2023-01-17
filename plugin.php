@@ -3,7 +3,7 @@
 /**
  * Plugin Name:         Zammad for WordPress
  * Plugin URI:          https://github.com/ouun/zammad-wp/
- * Version:				0.8.3
+ * Version:				0.9.0
  * Description:         Integrates Zammad Helpdesk into WordPress
  * Author:              Philipp Wellmer <philipp@ouun.io>
  * License:             GPL v2 or later
@@ -17,7 +17,7 @@
  */
 
 // Useful global constants.
-define('ZAMMAD_WP_VERSION', '0.8.3');
+define('ZAMMAD_WP_VERSION', '0.9.0');
 define('ZAMMAD_WP_URL', plugin_dir_url(__FILE__));
 define('ZAMMAD_WP_PATH', plugin_dir_path(__FILE__));
 define('ZAMMAD_WP_INC', ZAMMAD_WP_PATH . 'includes/');
