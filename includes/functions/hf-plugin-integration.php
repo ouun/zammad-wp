@@ -119,6 +119,9 @@ if (!function_exists('zammad_hf_process_form_action')) {
             return false;
         }
 
+		// Attachments
+		$files = [];
+
         // Connect
         $zammad = new ZammadWp\Zammad([
             // todo: Allow overwriting options
@@ -130,16 +133,18 @@ if (!function_exists('zammad_hf_process_form_action')) {
         // Get form submission values, uppercase all array keys as HF does
         $data = array_change_key_case($submission->data, CASE_UPPER);
 
-        // Find email field
+		// Find email field
         $email_address = '';
 
         // Presort essential fields
         foreach ($data as $field => $value) {
-            if (is_email($value)) {
-                $email_address = $value;
-            } elseif (hf_is_file($value)) {
-                $files[] = $value;
-            }
+			if (is_string($value) && is_email($value)) {
+				$email_address = $value;
+			} elseif (hf_is_file($value)) {
+				// todo: Currently no support for multiple files
+				// @see: https://github.com/ibericode/html-forms/issues/53
+				$files[] = $value;
+			}
         }
 
         // Bail if no email address found
@@ -153,7 +158,14 @@ if (!function_exists('zammad_hf_process_form_action')) {
 
         if (empty($fistname) && empty($lastname)) {
             $name = hf_array_get($data, 'NAME', '');
-            list( $firstname, $lastname ) = explode(' ', $name, 2);
+
+			if( $names = explode(' ', $name, 2) ) {
+				if (count($names) === 2) {
+					list( $firstname, $lastname ) = $names;
+				} else {
+					$lastname = $name;
+				}
+			}
         }
 
         // Search for existing user in Zammad
@@ -201,6 +213,11 @@ if (!function_exists('zammad_hf_process_form_action')) {
             hf_replace_data_variables($settings['message'], $data, 'esc_html'),
             $submission
         );
+		$attachments = apply_filters(
+				'zammad_wp:hf_action:attachments',
+				zammad_hf_prepare_attachments($files),
+				$submission
+		);
         $tags    = apply_filters(
             'zammad_wp:hf_action:tags',
             hf_replace_data_variables($settings['tags'], $data, 'strip_tags'),
@@ -226,12 +243,13 @@ if (!function_exists('zammad_hf_process_form_action')) {
                 'content_type'  => 'text/html',
                 'type'          => 'web',
                 'internal'      => false,
+				'attachments'	=> $attachments
         ], $submission);
 
         // Create the ticket
         $ticket = $customer->ticket()->createTicket($ticket);
 
-        // Ticket creation success/error
+		// Ticket creation success/error
         if (is_int($ticket)) {
             return $ticket;
         } else {
@@ -240,6 +258,36 @@ if (!function_exists('zammad_hf_process_form_action')) {
     }
 }
 
+/**
+ * Prepare attached files for Zammad API
+ * @see: https://docs.zammad.org/en/latest/api/ticket/articles.html#create
+ *
+ * @param array $files
+ * @return array
+ */
+function zammad_hf_prepare_attachments($files)
+{
+	$attachments = [];
+
+	foreach ( $files as $file ) {
+		if  (isset($file['dir']) && isset($file['name']) ) {
+			$content = file_get_contents(trailingslashit($file['dir']) . $file['name']);
+			$attachments[] = [
+				'filename' => $file['name'],
+				'data' => base64_encode( $content ),
+				'mime-type' => isset( $file['attachment_id'] ) ? get_post_mime_type( $file['attachment_id'] ) : $file['type']
+			];
+		}
+	}
+
+	return $attachments;
+}
+
+/**
+ * Default Settings for HTML Forms Action
+ *
+ * @return array
+ */
 function zammad_hf_default_settings()
 {
     return array(
