@@ -52,7 +52,7 @@ function zammad_init_form($form_element = '#feedback-form', $args = array())
     );
 
     // Localize Script
-    wp_add_inline_script('zammad_wp_form', 'const formOptions =' . json_encode(wp_parse_args($args, $defaults), JSON_UNESCAPED_UNICODE), 'before');
+    wp_add_inline_script('zammad_wp_form', 'window.formOptions =' . json_encode(wp_parse_args($args, $defaults), JSON_UNESCAPED_UNICODE), 'before');
 
     //  Enqueue styles
     wp_enqueue_style('zammad_wp_form');
