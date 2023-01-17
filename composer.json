@@ -24,7 +24,6 @@
   },
   "require": {
     "php": ">=7.2",
-    "ouun/zammad-wp-pro": "dev-main",
     "zammad/zammad-api-client-php": "^2.0"
   },
   "require-dev": {

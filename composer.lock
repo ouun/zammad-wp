@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a12c5e7b00833cc54e324580564da62",
+    "content-hash": "bc095263ae9214c108ba40198dfa1bd0",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -336,38 +336,6 @@
                 }
             ],
             "time": "2022-10-26T14:07:24+00:00"
-        },
-        {
-            "name": "ouun/zammad-wp-pro",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:ouun/zammad-wp-pro.git",
-                "reference": "d90e91a26fe9167e77e228ce084eb533c2ea4365"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ouun/zammad-wp-pro/zipball/d90e91a26fe9167e77e228ce084eb533c2ea4365",
-                "reference": "d90e91a26fe9167e77e228ce084eb533c2ea4365",
-                "shasum": ""
-            },
-            "default-branch": true,
-            "type": "library",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Philipp",
-                    "email": "philipp@ouun.io"
-                }
-            ],
-            "description": "Pro Package for Zammad WP",
-            "support": {
-                "source": "https://github.com/ouun/zammad-wp-pro/tree/main",
-                "issues": "https://github.com/ouun/zammad-wp-pro/issues"
-            },
-            "time": "2022-10-12T10:40:16+00:00"
         },
         {
             "name": "psr/http-client",
@@ -3156,7 +3124,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ouun/zammad-wp-pro": 20,
         "10up/wp_mock": 20,
         "10up/phpcs-composer": 20
     },
