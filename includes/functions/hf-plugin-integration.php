@@ -270,8 +270,9 @@ function zammad_hf_prepare_attachments($files)
 	$attachments = [];
 
 	foreach ( $files as $file ) {
-		if  (isset($file['dir']) && isset($file['name']) ) {
-			$content = file_get_contents(trailingslashit($file['dir']) . $file['name']);
+		// Supports HTML Forms ($file['tmp_name']) & HTML Forms Premium ($file['name'])
+		if  ((isset($file['dir']) || isset($file['tmp_name'])) && isset($file['name']) ) {
+			$content = file_get_contents($file['tmp_name'] ?? trailingslashit($file['dir']) . $file['name']);
 			$attachments[] = [
 				'filename' => $file['name'],
 				'data' => base64_encode( $content ),
